@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cslnight.homework.mapper.SellerMapper">
+
+    <resultMap id="sellerMap" type="com.cslnight.homework.bean.Seller">
+        <id column="id" />
+        <result column="name" property="name" />
+        <result column="products" property="products"
+                typeHandler="com.cslnight.homework.type.handler.ProductsTypeHandler" />
+    </resultMap>
+
+    <select id="selectSeller" resultMap="sellerMap" parameterType="Integer">
+        select * from seller where id = #{id}
+    </select>
+
+    <insert id="insertSeller" parameterType="com.cslnight.homework.bean.Seller">
+         insert into seller (id,name,products)
+         values (#{id},#{name},#{products,typeHandler=com.cslnight.homework.type.handler.ProductsTypeHandler})
+    </insert>
+
+    <update id="updateSeller" parameterType="com.cslnight.homework.bean.Seller">
+      update seller set
+        products = #{products,typeHandler=com.cslnight.homework.type.handler.ProductsTypeHandler}
+      where id = #{id}
+    </update>
+
+    <delete id="deleteSeller" parameterType="Integer">
+        delete from seller where id = #{id}
+    </delete>
+</mapper>
